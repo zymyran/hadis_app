@@ -93,7 +93,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
     }
 
 
-    @Scheduled(cron = "0 2 * * * *", zone = "${time.zone}")
+    @Scheduled(cron = "0 */5 * * * *",zone = "${time.zone}")
     public void sendDailyMessage() {
         List<Chat> chatIds = chatService.getAllChats();
         List<Hadis> hadisses = hadisService.getAllHadis();
