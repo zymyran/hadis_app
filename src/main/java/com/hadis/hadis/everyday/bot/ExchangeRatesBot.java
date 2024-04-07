@@ -15,8 +15,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -26,6 +24,7 @@ import java.util.logging.Logger;
 public class ExchangeRatesBot extends TelegramLongPollingBot {
 
     private final static String START = "/start";
+    private final static String HADIS = "/hadis";
 
     @Autowired
     private ChatService chatService;
@@ -54,6 +53,12 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
             String userName = update.getMessage().getChat().getUserName();
             startCommand(chatId, userName);
         }
+
+        if (message.equals(HADIS)) {
+            List<Hadis> hadisses = hadisService.getAllHadis();
+
+            sendMessage(chatId, getHadis(hadisses));
+        }
     }
 
     @Override
@@ -77,7 +82,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
                 " welcome to our bot," +
                 " in our bot you can learn a lot of hadis," +
                 " our bot will send you hadis' everyday," +
-                " let's learn hadis' with us ";
+                " let's learn hadis with us ";
 
         String formattedText = String.format(startText, userName);
 
@@ -104,12 +109,15 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         for (Chat chat : chatIds) {
             Long chatId = chat.getChatId();
 
-            int index = (int) (Math.random() * hadisses.size());
-
-            String hadisOfDay = hadisses.get(index).getDescription();
-
-            sendMessage(chatId, hadisOfDay);
+            sendMessage(chatId, getHadis(hadisses));
         }
+    }
+
+    private String getHadis(List<Hadis> hadisses) {
+        int index = (int) (Math.random() * hadisses.size());
+
+        return hadisses.get(index).getDescription();
+
     }
 
 
