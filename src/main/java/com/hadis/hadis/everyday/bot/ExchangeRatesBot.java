@@ -73,9 +73,11 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
     }
 
     private void startCommand(Long chatId, String userName) {
-        String startText = "Hello %s, " +
-                " it is bot will send every day one hadis in kazakh" +
-                " Thanks!";
+        String startText = "Assalam aleykum %s, " +
+                " welcome to our bot," +
+                " in our bot you can learn a lot of hadis," +
+                " our bot will send you hadis' everyday," +
+                " let's learn hadis' with us ";
 
         String formattedText = String.format(startText, userName);
 
