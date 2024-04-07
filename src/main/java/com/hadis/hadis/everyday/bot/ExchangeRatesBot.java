@@ -79,14 +79,15 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
 
         String formattedText = String.format(startText, userName);
 
-        saveChatIdToDataBase(chatId);
+        saveChatIdToDataBase(chatId, userName);
         sendMessage(chatId, formattedText);
     }
 
-    private void saveChatIdToDataBase(Long chatId) {
+    private void saveChatIdToDataBase(Long chatId, String username) {
         Chat chat = Chat
                 .builder()
                 .chatId(chatId)
+                .username(username)
                 .build();
 
         chatService.saveChatId(chat);
