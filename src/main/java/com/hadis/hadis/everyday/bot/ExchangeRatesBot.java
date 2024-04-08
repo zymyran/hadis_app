@@ -25,6 +25,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
 
     private final static String START = "/start";
     private final static String HADIS = "/hadis";
+    private final static String DUA = "/dua";
 
     @Autowired
     private ChatService chatService;
@@ -58,6 +59,10 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
             List<Hadis> hadisses = hadisService.getAllHadis();
 
             sendMessage(chatId, getHadis(hadisses));
+        }
+
+        if (message.equals(DUA)) {
+            sendMessage(chatId, "in process...");
         }
     }
 
